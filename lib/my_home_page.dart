@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  List<int> getfrequenciaDezena() {
+  Map<int, int> getfrequenciaDezena() {
     List<bool> encontrarVez = [];
     List<int> frequenciaDezena = [0];
     List<String> ref = [];
@@ -44,13 +44,32 @@ class _MyHomePageState extends State<MyHomePage> {
       frequenciaDezena.add(encontrarVez.length);
       encontrarVez.clear();
     }
-    return frequenciaDezena;
+    return frequenciaDezena.asMap();
   }
 
-  getLargerDezena() {
+  Map<int, int> getLargerDezena() {
+    List<int> maioresDezenas = [0];
+    List<int> refKeys = getfrequenciaDezena().keys.toList();
+    int maiorValue = 0, maiorKey = 0;
+    for (var i = 1; i < 26; i++) {
+      for (var element in getfrequenciaDezena().entries) {
+        if (element.value > maiorValue && refKeys.contains(element.key)) {
+          maiorValue = element.value;
+          maiorKey = element.key;
+        }
+      }
+      maioresDezenas.add(maiorKey);
+      refKeys.remove(maiorKey);
+      maiorValue = 0;
+    }
+
     setState(() {
-      exibicao = getfrequenciaDezena().toString();
+      exibicao = maioresDezenas
+          .toString()
+          .substring(4, maioresDezenas.toString().length - 1);
     });
+
+    return maioresDezenas.asMap();
   }
 
   @override
@@ -68,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
               const Divider(height: 15),
               ElevatedButton(
                 onPressed: getLargerDezena,
-                child: const Text("Dezenas que mais saiu"),
+                child: const Text("Ordem dos números que mais saiu"),
               ),
             ],
           ),
@@ -77,3 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+// sequencia normal, vez e media
+// atraso normal, vez e media
+// pares e impares
+// primos
+// soma
+// fibonacci
