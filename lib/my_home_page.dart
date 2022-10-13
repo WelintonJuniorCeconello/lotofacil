@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return frequenciaDezena.asMap();
   }
 
-  Map<int, int> getLargerDezena() {
+  List<int> getLargerDezena() {
     List<int> maioresDezenas = [0];
     List<int> refKeys = getfrequenciaDezena().keys.toList();
     int maiorValue = 0, maiorKey = 0;
@@ -69,7 +69,50 @@ class _MyHomePageState extends State<MyHomePage> {
           .substring(4, maioresDezenas.toString().length - 1);
     });
 
-    return maioresDezenas.asMap();
+    return maioresDezenas;
+  }
+
+  // 1, 2, 3, 5, 8, 13, 21
+  getFibonacci() {
+    List<int> maiorFibonacci = getLargerDezena();
+    List<int> fibonacci = [
+      4,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25
+    ];
+    for (var fibo in fibonacci) {
+      maiorFibonacci.removeWhere((element) => element == fibo);
+    }
+    setState(() {
+      exibicao = maiorFibonacci
+          .toString()
+          .substring(4, maiorFibonacci.toString().length - 1);
+    });
+  }
+
+  // 1, 2, 3, 5, 8, 13, 21
+  getVezFibonacci() {
+    List<int> fibonacci = [1, 2, 3, 5, 8, 13, 21];
+    Map<int, int> maisFibonacci = {};
+
+    setState(() {
+      exibicao = maisFibonacci.toString();
+    });
   }
 
   @override
@@ -88,6 +131,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: getLargerDezena,
                 child: const Text("Ordem dos números que mais saiu"),
+              ),
+              const Divider(height: 15),
+              ElevatedButton(
+                onPressed: getFibonacci,
+                child: const Text("Ordem dos números Fibonacci que mais saiu"),
+              ),
+              const Divider(height: 1),
+              ElevatedButton(
+                onPressed: getVezFibonacci,
+                child: const Text("Fibonacci"),
               ),
             ],
           ),
