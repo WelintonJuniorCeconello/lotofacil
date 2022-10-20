@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lotofacil/storage.dart';
 
@@ -75,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // 1, 2, 3, 5, 8, 13, 21
   getFibonacci() {
     List<int> maiorFibonacci = getLargerDezena();
-    List<int> fibonacci = [
+    List<int> naoFibonacci = [
       4,
       6,
       7,
@@ -95,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       24,
       25
     ];
-    for (var fibo in fibonacci) {
+    for (var fibo in naoFibonacci) {
       maiorFibonacci.removeWhere((element) => element == fibo);
     }
     setState(() {
@@ -107,12 +109,40 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // 1, 2, 3, 5, 8, 13, 21
   getVezFibonacci() {
-    List<int> fibonacci = [1, 2, 3, 5, 8, 13, 21];
-    Map<int, int> maisFibonacci = {};
+    List<bool> encontraVez = [];
+    List<int> quatFiboConcurso = [];
+    List<String> fibonacci = ["01", "02", "03", "05", "08", "13", "21"];
+    //for (String fibo in fibonacci) {
+    for (String result in results) {
+      encontraVez.add(result.contains("01"));
+    }
+    for (var vez in encontraVez) {
+      quatFiboConcurso.add((vez) ? 1 : 0);
+    }
+    encontraVez.clear();
+    //}
 
     setState(() {
-      exibicao = maisFibonacci.toString();
+      exibicao = quatFiboConcurso.toString();
     });
+  }
+
+  gerarCombi() {
+    int value = 5;
+    debugPrint(value.toBinario(8));
+
+    int max = pow(2, value).toInt();
+    List<String> listBinario = [];
+    for (var i = 0; i < max; i++) {
+      listBinario.add(i.toBinario(value));
+    }
+    debugPrint(listBinario.toString());
+
+    List<List<int>> posicaoSet = [];
+    for (var element in listBinario) {
+      posicaoSet.add(element.binarioHigh(value));
+    }
+    debugPrint(posicaoSet.toString());
   }
 
   @override
@@ -139,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const Divider(height: 1),
               ElevatedButton(
-                onPressed: getVezFibonacci,
+                onPressed: gerarCombi,
                 child: const Text("Fibonacci"),
               ),
             ],
